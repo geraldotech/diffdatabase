@@ -11,15 +11,21 @@ Scripts para sincronização e validação de esquemas de bancos de dados MySQL.
 - Arquivos `.sql` de referência e bancos desatualizados
 
 ## Estrutura
-├── diff4.sh          # Gera update.sql para sincronizar bancos
-├── report.sh         # Gera relatório de tabelas e colunas faltantes
-├── README.md         # Documentação (este arquivo)
+
+├── diff4.sh          # Gera update.sql para sincronizar bancos  
+├── report.sh         # Gera relatório de tabelas e colunas faltantes  
+├── README.md         # Documentação (este arquivo)  
 
 ---
 
 ## Scripts disponíveis
 
 ### 1. **Gerar Atualizações (`diff4.sh`)**
+
+## diff5 
+foi adicionado suporte a drop tables (tem no desatualizado mais não tem no atualizado)
+
+
 
 Script para gerar um arquivo de atualização (`update.sql`) que adiciona tabelas e colunas faltantes.
 
