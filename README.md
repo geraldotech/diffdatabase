@@ -1,8 +1,36 @@
-### UPDATE Database
+# Database Sync and Validation Scripts
 
-- compatiblidade: mysqlserver:
-- rodar no linux
+Scripts para sincronização e validação de esquemas de bancos de dados MySQL.
 
-Gerar um update.sql das diferenças do banconovo vs bancodesatualizado
+---
 
-- syntax: `./diff2.sh new.sql old.sql ok.sql`
+## Pré-requisitos
+
+- Bash (Linux, macOS ou WSL no Windows)
+- MySQL (para aplicar os scripts gerados)
+- Arquivos `.sql` de referência e bancos desatualizados
+
+## Estrutura
+├── diff4.sh          # Gera update.sql para sincronizar bancos
+├── report.sh         # Gera relatório de tabelas e colunas faltantes
+├── README.md         # Documentação (este arquivo)
+
+---
+
+## Scripts disponíveis
+
+### 1. **Gerar Atualizações (`diff4.sh`)**
+
+Script para gerar um arquivo de atualização (`update.sql`) que adiciona tabelas e colunas faltantes.
+
+#### **📚 Uso:**
+
+```bash
+./diff4.sh referencia.sql desatualizado.sql update.sql
+```
+
+### 2. **Gerar Relatório de Diferenças (report.sh)**
+```bash
+./report.sh referencia.sql desatualizado.sql relatorio.txt
+```
+
