@@ -29,9 +29,14 @@ REFERENCE_TABLES="reference_tables.txt"
 OUTDATED_TABLES="outdated_tables.txt"
 MISSING_TABLES="missing_tables.txt"
 
+# check os 3 argumentos foram passados
+if [ $# -ne 3 ]; then
+  echo "Uso: $0 <arquivo_sql_atualizado> <arquivo_sql_desatualizado> <script_de_saida.sql>"
+  exit 1
+fi
+
 # Start fresh
 rm -f "$OUTPUT_SCRIPT"
-echo "START TRANSACTION;" > "$OUTPUT_SCRIPT"
 
 
 # textos opcionais
@@ -48,6 +53,7 @@ if ([ $VERSION -eq 1 ]); then
 fi
 # textos opcionais
 
+echo "START TRANSACTION;" >> "$OUTPUT_SCRIPT"
 
 # Step 1: Extract table names
 grep -i "CREATE TABLE" "$REFERENCE_SQL" | awk '{print $3}' | tr -d '`' | sort | uniq > "$REFERENCE_TABLES"
