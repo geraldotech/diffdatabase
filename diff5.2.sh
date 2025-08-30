@@ -1,16 +1,9 @@
 #!/bin/bash
 
 ## Gera script de atualização da estrutura (não dados) entre dois arquivos SQL.
-## Versão com suporte: CREATE, ALTER
-
-## diff 5.2 - 30/08/2025 
-
-# ADD:
-# - DROP TABLES 
-# - SE FOR UMA COLUNA DE AUTOINCREMENT APENAS ATUALIZA O NOME 
-# - adicionado alguns logs de criação
-
-# Uso: ./diff3.sh UPDATED.sql OUTDATED.sql updatefile.sql
+## https://github.com/geraldotech/diffdatabase
+## Author: GeraldoDev
+## Since: 29, April, 2025
 
 # Captura o timestamp inicial
 start=$(date +%s)
@@ -29,7 +22,7 @@ REFERENCE_TABLES="reference_tables.txt"
 OUTDATED_TABLES="outdated_tables.txt"
 MISSING_TABLES="missing_tables.txt"
 
-# check os 3 argumentos foram passados
+# check os 3 argumentos foram passados, exige mensagem de uso:
 if [ $# -ne 3 ]; then
   echo "Uso: $0 <arquivo_sql_atualizado> <arquivo_sql_desatualizado> <script_de_saida.sql>"
   exit 1
