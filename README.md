@@ -36,17 +36,16 @@ Script para gerar um arquivo de atualização (`update.sql`) que adiciona tabela
 
 ## Features
 
-- CREATE TABLES NÃO EXISTENTES
-- ALTER TABLES PARA EXISTENTES
-- DROP TABLES (v 5.2)
+- CREATE TABLE
+- ALTER TABLE: (ADD COLUMN)
+- ALTER TABLE: (CHANGE COLUMN para AUTO_INCREMENT, only change table name) (v 5.2+)
+- DROP TABLE (v 5.2+)
 
 ## version 5.2 (30/08/2025)
 
 ```shell
-
 # - BUGFIX SE FOR UMA COLUNA DE AUTOINCREMENT APENAS ATUALIZA O NOME 
 # - logs, tempo decorrido, hostname
-
 ```
 
 
