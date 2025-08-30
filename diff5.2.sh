@@ -1,13 +1,23 @@
 #!/bin/bash
 
 ## Gera script de atualização da estrutura (não dados) entre dois arquivos SQL.
-## Versão completa com suporte a CREATE, ALTER
-## diff 5.2 30/08/2025 
+## Versão com suporte: CREATE, ALTER
+
+## diff 5.2 - 30/08/2025 
+
 # ADD:
 # - DROP TABLES 
 # - SE FOR UMA COLUNA DE AUTOINCREMENT APENAS ATUALIZA O NOME 
+# - adicionado alguns logs de criação
 
 # Uso: ./diff3.sh UPDATED.sql OUTDATED.sql updatefile.sql
+
+# Captura o timestamp inicial
+start=$(date +%s)
+
+#variaveis de apoio
+ADD_LOG=1
+VERSION=1
 
 # Inputs
 REFERENCE_SQL=$1
@@ -22,7 +32,22 @@ MISSING_TABLES="missing_tables.txt"
 # Start fresh
 rm -f "$OUTPUT_SCRIPT"
 echo "START TRANSACTION;" > "$OUTPUT_SCRIPT"
-echo "" >> "$OUTPUT_SCRIPT"
+
+
+# textos opcionais
+if [ $ADD_LOG -eq 1 ]; then
+    echo "-- criado gerado em $(date '+%Y-%m-%d %H:%M:%S')"  >> "$OUTPUT_SCRIPT"    
+    echo "-- hostname: `hostname`"  >> "$OUTPUT_SCRIPT"
+fi
+
+#echo "incluir versao no final? (s para sim)"
+#read version
+if ([ $VERSION -eq 1 ]); then
+    echo "-- versao do script 5.2 - GeraldoDev"  >> "$OUTPUT_SCRIPT"
+    echo >> "$OUTPUT_SCRIPT" # linha branco
+fi
+# textos opcionais
+
 
 # Step 1: Extract table names
 grep -i "CREATE TABLE" "$REFERENCE_SQL" | awk '{print $3}' | tr -d '`' | sort | uniq > "$REFERENCE_TABLES"
@@ -92,7 +117,8 @@ while read -r TABLE_NAME; do
     fi
 done < "$REFERENCE_TABLES"
 
-# Step 5: Drop tables not found in reference
+# Step 5: Drop tables nao encontradas na referencia
+echo >> "$OUTPUT_SCRIPT" # linha branco
 echo "-- Dropping tables not found in reference" >> "$OUTPUT_SCRIPT"
 TABLES_TO_DROP=$(comm -13 "$REFERENCE_TABLES" "$OUTDATED_TABLES")
 if [ -n "$TABLES_TO_DROP" ]; then
@@ -107,7 +133,13 @@ fi
 echo "" >> "$OUTPUT_SCRIPT"
 echo "COMMIT;" >> "$OUTPUT_SCRIPT"
 
-# Cleanup
+# Cleanup remove os arquivos temporarios
 rm -f "$REFERENCE_TABLES" "$OUTDATED_TABLES" "$MISSING_TABLES"
 
-echo "SQL script created: $OUTPUT_SCRIPT"
+echo $(date '+%Y-%m-%d %H:%M:%S') "SQL script created: $OUTPUT_SCRIPT"
+
+# Captura o timestamp final
+end=$(date +%s)
+# Calcula diferença
+elapsed=$((end - start)) 
+echo "tempo gasto $elapsed segundos"
