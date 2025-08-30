@@ -6,7 +6,7 @@ Scripts para sincronização e validação de esquemas de bancos de dados MySQL.
 
 ## Pré-requisitos
 
-- Bash (Linux, macOS ou WSL no Windows)
+- Shell Script (Linux, macOS ou WSL no Windows)
 - MySQL (para aplicar os scripts gerados)
 - Arquivos `.sql` de referência e bancos desatualizados
 
